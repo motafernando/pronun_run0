@@ -158,3 +158,124 @@ def split_dataset(docs,seed=42,fold=0):
 def bio_keys(spans):
     return {(s['label'],s['begin'],s['end']) for s in spans if s['label'] in {'Prazo','Pronunciamento','Encaminhamento'}}
 
+
+def boundary_mask_and_weights(a_ann, b_ann, a_gold, b_gold, policy='none', soft_weight=0.25):
+    if policy == 'none' or a_gold is None or b_gold is None:
+        return list(a_ann), list(b_ann), [1.0]*len(a_ann), [1.0]*len(b_ann)
+    if policy == 'border_mask':
+        a_out = [-100 if (x >= 0 and g >= 0 and x != g) else x for x, g in zip(a_ann, a_gold)]
+        b_out = [-100 if (x >= 0 and g >= 0 and x != g) else x for x, g in zip(b_ann, b_gold)]
+        return a_out, b_out, [1.0]*len(a_ann), [1.0]*len(b_ann)
+    if policy == 'border_soft':
+        wa = [soft_weight if (x >= 0 and g >= 0 and x != g) else 1.0 for x, g in zip(a_ann, a_gold)]
+        wb = [soft_weight if (x >= 0 and g >= 0 and x != g) else 1.0 for x, g in zip(b_ann, b_gold)]
+        return list(a_ann), list(b_ann), wa, wb
+    raise ValueError(f'Política de fronteira desconhecida: {policy}')
+
+
+def postprocess_spans_v3(text, spans):
+    cleaned = []
+    for s in sorted(spans, key=lambda x: (x['begin'], x['end'])):
+        a, b = s['begin'], s['end']
+        while a < b and text[a].isspace():
+            a += 1
+        while b > a and (text[b - 1].isspace() or text[b - 1] in ',;:'):
+            b -= 1
+        if a < b:
+            item = dict(s)
+            item.update(begin=a, end=b, char_start_index=a, char_end_index=b, span=text[a:b])
+            cleaned.append(item)
+    merged = []
+    for s in cleaned:
+        if merged and merged[-1]['label'] == s['label'] and s['begin'] == merged[-1]['end']:
+            prev = merged[-1]
+            prev['end'] = s['end']
+            prev['char_end_index'] = s['end']
+            prev['span'] = text[prev['begin']:prev['end']]
+            continue
+        merged.append(s)
+    return merged
+
+
+def predict_relations_v3(text, entities):
+    relations = []
+    seen = set()
+    # 1. Detect interrupted spans separated by a Prazo -> 'continuado'
+    for i, first in enumerate(entities):
+        if first['label'] not in {'Encaminhamento', 'Pronunciamento'}:
+            continue
+        for j in range(i + 1, len(entities)):
+            second = entities[j]
+            if second['label'] != first['label'] or second['begin'] < first['end']:
+                continue
+            between = [
+                (k, e) for k, e in enumerate(entities)
+                if e['label'] == 'Prazo' and e['begin'] >= first['begin'] - 5 and e['end'] <= second['end'] + 5
+                and not (e['end'] <= first['begin'] or e['begin'] >= second['end'])
+            ]
+            gap_len = second['begin'] - first['end']
+            if between and gap_len <= 60:
+                rel_key = ('continuado', i, j)
+                if rel_key not in seen:
+                    seen.add(rel_key)
+                    relations.append(dict(label='continuado', source=i, target=j))
+                break
+
+    # 2. Link each Prazo to its governing Encaminhamento or Pronunciamento -> 'estabelecido'
+    for p_idx, p in enumerate(entities):
+        if p['label'] != 'Prazo':
+            continue
+        enclosing = []
+        nearby = []
+        for t_idx, t in enumerate(entities):
+            if t['label'] not in {'Encaminhamento', 'Pronunciamento'}:
+                continue
+            overlap = max(0, min(p['end'], t['end']) - max(p['begin'], t['begin']))
+            if overlap > 0:
+                # Prefer Encaminhamento when nested inside both Pronunciamento and Encaminhamento
+                prio = 0 if t['label'] == 'Encaminhamento' else 1
+                enclosing.append((prio, t['end'] - t['begin'], t_idx))
+            else:
+                if t['end'] <= p['begin']:
+                    dist = p['begin'] - t['end']
+                    if dist <= 250:
+                        prio = 0 if t['label'] == 'Encaminhamento' else 1
+                        nearby.append((dist, prio, t_idx))
+                elif t['begin'] >= p['end']:
+                    dist = t['begin'] - p['end']
+                    if dist <= 80:
+                        prio = 0 if t['label'] == 'Encaminhamento' else 1
+                        nearby.append((dist + 40, prio, t_idx))
+        target_idx = None
+        if enclosing:
+            enclosing.sort()
+            target_idx = enclosing[0][2]
+        elif nearby:
+            nearby.sort()
+            target_idx = nearby[0][2]
+        if target_idx is not None:
+            rel_key = ('estabelecido', p_idx, target_idx)
+            if rel_key not in seen:
+                seen.add(rel_key)
+                relations.append(dict(label='estabelecido', source=p_idx, target=target_idx))
+
+    # 3. Link Encaminhamento to its preceding Pronunciamento -> 'vinculado'
+    continuado_targets = {r['target'] for r in relations if r['label'] == 'continuado'}
+    for e_idx, e in enumerate(entities):
+        if e['label'] != 'Encaminhamento' or e_idx in continuado_targets:
+            continue
+        preceding_pron = [
+            (e['begin'] - p['end'], p_idx)
+            for p_idx, p in enumerate(entities)
+            if p['label'] == 'Pronunciamento' and p['end'] <= e['begin'] and (e['begin'] - p['end']) <= 250
+        ]
+        if preceding_pron:
+            preceding_pron.sort()
+            p_idx = preceding_pron[0][1]
+            rel_key = ('vinculado', e_idx, p_idx)
+            if rel_key not in seen:
+                seen.add(rel_key)
+                relations.append(dict(label='vinculado', source=e_idx, target=p_idx))
+    return relations
+
+
