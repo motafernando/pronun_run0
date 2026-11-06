@@ -1,0 +1,1072 @@
+[
+  {
+    "epoch": 1,
+    "loss": 0.3239879882343674,
+    "learning_rate": 1.251121076233184e-05,
+    "selection_score": 0.3378522062732589,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 58,
+        "tp": 2,
+        "precision": 0.034482758620689655,
+        "recall": 0.14285714285714285,
+        "f1": 0.05555555555555555
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 39,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 13,
+          "tp": 1,
+          "precision": 0.07692307692307693,
+          "recall": 0.16666666666666666,
+          "f1": 0.10526315789473684
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 6,
+          "tp": 1,
+          "precision": 0.16666666666666666,
+          "recall": 0.3333333333333333,
+          "f1": 0.2222222222222222
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 58,
+          "tp": 8,
+          "precision": 0.13793103448275862,
+          "recall": 0.5714285714285714,
+          "f1": 0.2222222222222222
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 39,
+            "tp": 3,
+            "precision": 0.07692307692307693,
+            "recall": 0.6,
+            "f1": 0.13636363636363635
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 13,
+            "tp": 2,
+            "precision": 0.15384615384615385,
+            "recall": 0.3333333333333333,
+            "f1": 0.21052631578947367
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 0,
+          "expected_Implicito": 3,
+          "accuracy": 0.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 2,
+    "loss": 0.09782427981475829,
+    "learning_rate": 1.9442508710801397e-05,
+    "selection_score": 0.3888888888888889,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 23,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 10,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 6,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 7,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 23,
+          "tp": 7,
+          "precision": 0.30434782608695654,
+          "recall": 0.5,
+          "f1": 0.3783783783783784
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 10,
+            "tp": 3,
+            "precision": 0.3,
+            "recall": 0.6,
+            "f1": 0.4
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 6,
+            "tp": 1,
+            "precision": 0.16666666666666666,
+            "recall": 0.16666666666666666,
+            "f1": 0.16666666666666666
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 7,
+            "tp": 3,
+            "precision": 0.42857142857142855,
+            "recall": 1.0,
+            "f1": 0.6
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 0,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.0
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 3,
+    "loss": 0.05895479099481203,
+    "learning_rate": 1.8053758088601298e-05,
+    "selection_score": 0.49259259259259264,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 31,
+        "tp": 1,
+        "precision": 0.03225806451612903,
+        "recall": 0.07142857142857142,
+        "f1": 0.044444444444444446
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 10,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 12,
+          "tp": 1,
+          "precision": 0.08333333333333333,
+          "recall": 0.16666666666666666,
+          "f1": 0.1111111111111111
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 9,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 31,
+          "tp": 11,
+          "precision": 0.3548387096774194,
+          "recall": 0.7857142857142857,
+          "f1": 0.48888888888888893
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 10,
+            "tp": 4,
+            "precision": 0.4,
+            "recall": 0.8,
+            "f1": 0.5333333333333333
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 12,
+            "tp": 4,
+            "precision": 0.3333333333333333,
+            "recall": 0.6666666666666666,
+            "f1": 0.4444444444444444
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 9,
+            "tp": 3,
+            "precision": 0.3333333333333333,
+            "recall": 1.0,
+            "f1": 0.5
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 0,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.0
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 4,
+    "loss": 0.043473421021633346,
+    "learning_rate": 1.6665007466401196e-05,
+    "selection_score": 0.5189255189255189,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 22,
+        "tp": 3,
+        "precision": 0.13636363636363635,
+        "recall": 0.21428571428571427,
+        "f1": 0.16666666666666663
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 9,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 7,
+          "tp": 1,
+          "precision": 0.14285714285714285,
+          "recall": 0.16666666666666666,
+          "f1": 0.15384615384615383
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 6,
+          "tp": 2,
+          "precision": 0.3333333333333333,
+          "recall": 0.6666666666666666,
+          "f1": 0.4444444444444444
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 22,
+          "tp": 9,
+          "precision": 0.4090909090909091,
+          "recall": 0.6428571428571429,
+          "f1": 0.5000000000000001
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 9,
+            "tp": 3,
+            "precision": 0.3333333333333333,
+            "recall": 0.6,
+            "f1": 0.42857142857142855
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 7,
+            "tp": 3,
+            "precision": 0.42857142857142855,
+            "recall": 0.5,
+            "f1": 0.4615384615384615
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 5,
+    "loss": 0.0321569408508732,
+    "learning_rate": 1.5276256844201097e-05,
+    "selection_score": 0.6758658008658008,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 20,
+        "tp": 3,
+        "precision": 0.15,
+        "recall": 0.21428571428571427,
+        "f1": 0.1764705882352941
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 6,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 10,
+          "tp": 1,
+          "precision": 0.1,
+          "recall": 0.16666666666666666,
+          "f1": 0.125
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 4,
+          "tp": 2,
+          "precision": 0.5,
+          "recall": 0.6666666666666666,
+          "f1": 0.5714285714285715
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 20,
+          "tp": 11,
+          "precision": 0.55,
+          "recall": 0.7857142857142857,
+          "f1": 0.6470588235294117
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 0.6,
+            "f1": 0.5454545454545454
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 10,
+            "tp": 5,
+            "precision": 0.5,
+            "recall": 0.8333333333333334,
+            "f1": 0.625
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 4,
+            "tp": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 0,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.0
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 6,
+    "loss": 0.025985879873010702,
+    "learning_rate": 1.3887506222000996e-05,
+    "selection_score": 0.49007936507936506,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 25,
+        "tp": 1,
+        "precision": 0.04,
+        "recall": 0.07142857142857142,
+        "f1": 0.05128205128205128
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 11,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 8,
+          "tp": 1,
+          "precision": 0.125,
+          "recall": 0.16666666666666666,
+          "f1": 0.14285714285714288
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 6,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 25,
+          "tp": 9,
+          "precision": 0.36,
+          "recall": 0.6428571428571429,
+          "f1": 0.4615384615384615
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 11,
+            "tp": 3,
+            "precision": 0.2727272727272727,
+            "recall": 0.6,
+            "f1": 0.37499999999999994
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 8,
+            "tp": 3,
+            "precision": 0.375,
+            "recall": 0.5,
+            "f1": 0.42857142857142855
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 7,
+    "loss": 0.022184987910681048,
+    "learning_rate": 1.2498755599800898e-05,
+    "selection_score": 0.46146146146146144,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 50,
+        "tp": 4,
+        "precision": 0.08,
+        "recall": 0.2857142857142857,
+        "f1": 0.125
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 32,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 12,
+          "tp": 3,
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 6,
+          "tp": 1,
+          "precision": 0.16666666666666666,
+          "recall": 0.3333333333333333,
+          "f1": 0.2222222222222222
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 50,
+          "tp": 11,
+          "precision": 0.22,
+          "recall": 0.7857142857142857,
+          "f1": 0.34374999999999994
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 32,
+            "tp": 3,
+            "precision": 0.09375,
+            "recall": 0.6,
+            "f1": 0.16216216216216214
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 12,
+            "tp": 5,
+            "precision": 0.4166666666666667,
+            "recall": 0.8333333333333334,
+            "f1": 0.5555555555555556
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 8,
+    "loss": 0.019845953674033103,
+    "learning_rate": 1.1110004977600797e-05,
+    "selection_score": 0.4274853801169591,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 34,
+        "tp": 2,
+        "precision": 0.058823529411764705,
+        "recall": 0.14285714285714285,
+        "f1": 0.08333333333333333
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 14,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 14,
+          "tp": 1,
+          "precision": 0.07142857142857142,
+          "recall": 0.16666666666666666,
+          "f1": 0.1
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 6,
+          "tp": 1,
+          "precision": 0.16666666666666666,
+          "recall": 0.3333333333333333,
+          "f1": 0.2222222222222222
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 34,
+          "tp": 9,
+          "precision": 0.2647058823529412,
+          "recall": 0.6428571428571429,
+          "f1": 0.37499999999999994
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 14,
+            "tp": 3,
+            "precision": 0.21428571428571427,
+            "recall": 0.6,
+            "f1": 0.3157894736842105
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 14,
+            "tp": 3,
+            "precision": 0.21428571428571427,
+            "recall": 0.5,
+            "f1": 0.3
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 9,
+    "loss": 0.018298894415267802,
+    "learning_rate": 9.721254355400698e-06,
+    "selection_score": 0.47222222222222215,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 39,
+        "tp": 2,
+        "precision": 0.05128205128205128,
+        "recall": 0.14285714285714285,
+        "f1": 0.07547169811320754
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 19,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 14,
+          "tp": 1,
+          "precision": 0.07142857142857142,
+          "recall": 0.16666666666666666,
+          "f1": 0.1
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 6,
+          "tp": 1,
+          "precision": 0.16666666666666666,
+          "recall": 0.3333333333333333,
+          "f1": 0.2222222222222222
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 39,
+          "tp": 11,
+          "precision": 0.28205128205128205,
+          "recall": 0.7857142857142857,
+          "f1": 0.4150943396226415
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 19,
+            "tp": 3,
+            "precision": 0.15789473684210525,
+            "recall": 0.6,
+            "f1": 0.25
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 14,
+            "tp": 5,
+            "precision": 0.35714285714285715,
+            "recall": 0.8333333333333334,
+            "f1": 0.5
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  {
+    "epoch": 10,
+    "loss": 0.016509933339070536,
+    "learning_rate": 8.332503733200598e-06,
+    "selection_score": 0.47201426024955434,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 29,
+        "tp": 1,
+        "precision": 0.034482758620689655,
+        "recall": 0.07142857142857142,
+        "f1": 0.046511627906976744
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 10,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 11,
+          "tp": 1,
+          "precision": 0.09090909090909091,
+          "recall": 0.16666666666666666,
+          "f1": 0.11764705882352942
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 8,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 29,
+          "tp": 10,
+          "precision": 0.3448275862068966,
+          "recall": 0.7142857142857143,
+          "f1": 0.46511627906976755
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 10,
+            "tp": 3,
+            "precision": 0.3,
+            "recall": 0.6,
+            "f1": 0.4
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 11,
+            "tp": 4,
+            "precision": 0.36363636363636365,
+            "recall": 0.6666666666666666,
+            "f1": 0.4705882352941177
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 8,
+            "tp": 3,
+            "precision": 0.375,
+            "recall": 1.0,
+            "f1": 0.5454545454545454
+          }
+        }
+      },
+      "documents": 6,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  }
+]

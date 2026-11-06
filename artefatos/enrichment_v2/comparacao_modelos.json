@@ -1,0 +1,132 @@
+{
+  "same_source_sha256": "f7ae06431065a8c1b4a1d760e021f7ff61319b231cbccfb8e0df280e3c1f432a",
+  "same_assignments": true,
+  "same_settings_except_model": true,
+  "selection": "macro F1 IoU >= 0.50 on one dev group",
+  "independent_test_used": false,
+  "models": {
+    "RoBERTaLexPT-base": {
+      "model": "eduagarcia/RoBERTaLexPT-base",
+      "revision": "9dea30875c93dc2d33b35c2338dfc93c86715b9e",
+      "best_epoch": 5,
+      "epochs_run": 10,
+      "dev_documents": 6,
+      "gold_spans": 14,
+      "predicted_spans": 20,
+      "macro_iou50_f1": 0.6758658008658008,
+      "micro_iou50_f1": 0.6470588235294117,
+      "micro_exact_f1": 0.1764705882352941,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 0,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.0
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      },
+      "checkpoint_sha256": "1f5571dbf03a1f443712ab306a9294774cb6801064a3351b39c548be873c0f16"
+    },
+    "BERTimbau-base": {
+      "model": "neuralmind/bert-base-portuguese-cased",
+      "revision": "94d69c95f98f7d5b2a8700c420230ae10def0baa",
+      "best_epoch": 5,
+      "epochs_run": 10,
+      "dev_documents": 6,
+      "gold_spans": 14,
+      "predicted_spans": 39,
+      "macro_iou50_f1": 0.5716505716505716,
+      "micro_iou50_f1": 0.4150943396226415,
+      "micro_exact_f1": 0.1509433962264151,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 5,
+          "expected_Intimacao": 6,
+          "accuracy": 0.8333333333333334
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 3,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.6
+        }
+      },
+      "checkpoint_sha256": "d2826f748d183267485aa9f8bf3f95024dbe4682376de0bfe1bcd4905c0ae86b"
+    },
+    "BERTimbau-large": {
+      "model": "neuralmind/bert-large-portuguese-cased",
+      "revision": "aa302f6ea73b759f7df9cad58bd272127b67ec28",
+      "best_epoch": 4,
+      "epochs_run": 9,
+      "dev_documents": 6,
+      "gold_spans": 14,
+      "predicted_spans": 19,
+      "macro_iou50_f1": 0.5833333333333334,
+      "micro_iou50_f1": 0.5454545454545454,
+      "micro_exact_f1": 0.12121212121212122,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 0,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.0
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 3,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.6
+        }
+      },
+      "checkpoint_sha256": "4e39942f0a45472502d105716a7957fd1c9ec066e333eab5c7518303e80c24b1"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+# Checkpoints bin?rios grandes (distribu?dos via Release / Hugging Face)
+*.pt
+*.bin
+*.safetensors
+
+# Dados brutos, corpus com textos judiciais/CNJ e credenciais
+*.jsonl
+*test_predictions.json
+artefatos/enrichment_*/relatorio.json
+artefatos/revisao_treino/
+artefatos/exemplo/
+.env/
+*.env
+*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
