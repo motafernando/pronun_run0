@@ -1,0 +1,207 @@
+[
+  {
+    "epoch": 1,
+    "loss": 0.6212567745538597,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 7,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 0,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 7,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 0,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "documents": 6
+    }
+  },
+  {
+    "epoch": 2,
+    "loss": 0.16329375091432172,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 29,
+        "tp": 2,
+        "precision": 0.06896551724137931,
+        "recall": 0.14285714285714285,
+        "f1": 0.09302325581395349
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 14,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 12,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 3,
+          "tp": 2,
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666
+        }
+      },
+      "documents": 6
+    }
+  },
+  {
+    "epoch": 3,
+    "loss": 0.10185520414379426,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 24,
+        "tp": 1,
+        "precision": 0.041666666666666664,
+        "recall": 0.07142857142857142,
+        "f1": 0.052631578947368425
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 13,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 8,
+          "tp": 1,
+          "precision": 0.125,
+          "recall": 0.16666666666666666,
+          "f1": 0.14285714285714288
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 3,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "documents": 6
+    }
+  },
+  {
+    "epoch": 4,
+    "loss": 0.0737649004168237,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 41,
+        "tp": 1,
+        "precision": 0.024390243902439025,
+        "recall": 0.07142857142857142,
+        "f1": 0.03636363636363637
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 22,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 16,
+          "tp": 1,
+          "precision": 0.0625,
+          "recall": 0.16666666666666666,
+          "f1": 0.09090909090909091
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 3,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "documents": 6
+    }
+  },
+  {
+    "epoch": 5,
+    "loss": 0.050642451573565436,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 17,
+        "tp": 2,
+        "precision": 0.11764705882352941,
+        "recall": 0.14285714285714285,
+        "f1": 0.12903225806451615
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 6,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 8,
+          "tp": 2,
+          "precision": 0.25,
+          "recall": 0.3333333333333333,
+          "f1": 0.28571428571428575
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 3,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "documents": 6
+    }
+  }
+]

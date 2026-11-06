@@ -1,0 +1,77 @@
+{
+  "epoch": 4,
+  "dev": {
+    "overall": {
+      "gold": 14,
+      "pred": 32,
+      "tp": 4,
+      "precision": 0.125,
+      "recall": 0.2857142857142857,
+      "f1": 0.17391304347826086
+    },
+    "by_label": {
+      "Pronunciamento": {
+        "gold": 5,
+        "pred": 16,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "Encaminhamento": {
+        "gold": 6,
+        "pred": 12,
+        "tp": 2,
+        "precision": 0.16666666666666666,
+        "recall": 0.3333333333333333,
+        "f1": 0.2222222222222222
+      },
+      "Prazo": {
+        "gold": 3,
+        "pred": 4,
+        "tp": 2,
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285715
+      }
+    },
+    "iou50": {
+      "overall": {
+        "gold": 14,
+        "pred": 32,
+        "tp": 9,
+        "precision": 0.28125,
+        "recall": 0.6428571428571429,
+        "f1": 0.391304347826087
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 16,
+          "tp": 2,
+          "precision": 0.125,
+          "recall": 0.4,
+          "f1": 0.19047619047619047
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 12,
+          "tp": 4,
+          "precision": 0.3333333333333333,
+          "recall": 0.6666666666666666,
+          "f1": 0.4444444444444444
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 4,
+          "tp": 3,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571
+        }
+      }
+    },
+    "documents": 6
+  },
+  "macro_f1": 0.4973544973544974
+}

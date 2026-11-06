@@ -1,0 +1,192 @@
+{
+  "status": "exploratório: seleção e comparação na mesma validação; sem teste independente para esta etapa",
+  "supervision": "peso 2 na loss para tokens I; sem LLM externo e sem alteração do gold",
+  "comparisons": [
+    {
+      "fold": "fold0",
+      "control": "comprehensive_iou50_s42",
+      "supervised": "supervisor_continuacao_s42",
+      "control_epoch": 4,
+      "control_dev_macro_iou50": 0.4973544973544974,
+      "control_dev_overall_exact": {
+        "gold": 14,
+        "pred": 32,
+        "tp": 4,
+        "precision": 0.125,
+        "recall": 0.2857142857142857,
+        "f1": 0.17391304347826086
+      },
+      "control_dev_overall_iou50": {
+        "gold": 14,
+        "pred": 32,
+        "tp": 9,
+        "precision": 0.28125,
+        "recall": 0.6428571428571429,
+        "f1": 0.391304347826087
+      },
+      "control_by_label_iou50": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 16,
+          "tp": 2,
+          "precision": 0.125,
+          "recall": 0.4,
+          "f1": 0.19047619047619047
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 12,
+          "tp": 4,
+          "precision": 0.3333333333333333,
+          "recall": 0.6666666666666666,
+          "f1": 0.4444444444444444
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 4,
+          "tp": 3,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571
+        }
+      },
+      "supervised_epoch": 4,
+      "supervised_dev_macro_iou50": 0.6092436974789915,
+      "supervised_dev_overall_exact": {
+        "gold": 14,
+        "pred": 22,
+        "tp": 6,
+        "precision": 0.2727272727272727,
+        "recall": 0.42857142857142855,
+        "f1": 0.33333333333333326
+      },
+      "supervised_dev_overall_iou50": {
+        "gold": 14,
+        "pred": 22,
+        "tp": 10,
+        "precision": 0.45454545454545453,
+        "recall": 0.7142857142857143,
+        "f1": 0.5555555555555556
+      },
+      "supervised_by_label_iou50": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 7,
+          "tp": 3,
+          "precision": 0.42857142857142855,
+          "recall": 0.6,
+          "f1": 0.5
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 11,
+          "tp": 4,
+          "precision": 0.36363636363636365,
+          "recall": 0.6666666666666666,
+          "f1": 0.4705882352941177
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 4,
+          "tp": 3,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571
+        }
+      }
+    },
+    {
+      "fold": "fold2",
+      "control": "fold2_continuacao_1_s42",
+      "supervised": "fold2_continuacao_2_s42",
+      "control_epoch": 1,
+      "control_dev_macro_iou50": 0.7999999999999999,
+      "control_dev_overall_exact": {
+        "gold": 9,
+        "pred": 14,
+        "tp": 1,
+        "precision": 0.07142857142857142,
+        "recall": 0.1111111111111111,
+        "f1": 0.08695652173913043
+      },
+      "control_dev_overall_iou50": {
+        "gold": 9,
+        "pred": 14,
+        "tp": 9,
+        "precision": 0.6428571428571429,
+        "recall": 1.0,
+        "f1": 0.782608695652174
+      },
+      "control_by_label_iou50": {
+        "Pronunciamento": {
+          "gold": 4,
+          "pred": 4,
+          "tp": 4,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "Encaminhamento": {
+          "gold": 3,
+          "pred": 7,
+          "tp": 3,
+          "precision": 0.42857142857142855,
+          "recall": 1.0,
+          "f1": 0.6
+        },
+        "Prazo": {
+          "gold": 2,
+          "pred": 3,
+          "tp": 2,
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8
+        }
+      },
+      "supervised_epoch": 1,
+      "supervised_dev_macro_iou50": 0.7999999999999999,
+      "supervised_dev_overall_exact": {
+        "gold": 9,
+        "pred": 14,
+        "tp": 2,
+        "precision": 0.14285714285714285,
+        "recall": 0.2222222222222222,
+        "f1": 0.17391304347826086
+      },
+      "supervised_dev_overall_iou50": {
+        "gold": 9,
+        "pred": 14,
+        "tp": 9,
+        "precision": 0.6428571428571429,
+        "recall": 1.0,
+        "f1": 0.782608695652174
+      },
+      "supervised_by_label_iou50": {
+        "Pronunciamento": {
+          "gold": 4,
+          "pred": 4,
+          "tp": 4,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "Encaminhamento": {
+          "gold": 3,
+          "pred": 7,
+          "tp": 3,
+          "precision": 0.42857142857142855,
+          "recall": 1.0,
+          "f1": 0.6
+        },
+        "Prazo": {
+          "gold": 2,
+          "pred": 3,
+          "tp": 2,
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8
+        }
+      }
+    }
+  ]
+}

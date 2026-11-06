@@ -1,0 +1,41 @@
+{
+  "epoch": 2,
+  "dev": {
+    "overall": {
+      "gold": 14,
+      "pred": 29,
+      "tp": 2,
+      "precision": 0.06896551724137931,
+      "recall": 0.14285714285714285,
+      "f1": 0.09302325581395349
+    },
+    "by_label": {
+      "Pronunciamento": {
+        "gold": 5,
+        "pred": 14,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "Encaminhamento": {
+        "gold": 6,
+        "pred": 12,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "Prazo": {
+        "gold": 3,
+        "pred": 3,
+        "tp": 2,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666
+      }
+    },
+    "documents": 6
+  },
+  "macro_f1": 0.2222222222222222
+}

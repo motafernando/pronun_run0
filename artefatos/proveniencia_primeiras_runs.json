@@ -1,0 +1,22 @@
+{
+  "encoder_revision": "9dea30875c93dc2d33b35c2338dfc93c86715b9e",
+  "note": "Os tres primeiros runs usaram refs/main local observado após execução; o SHA foi conferido no cache, não registrado no momento exato do carregamento.",
+  "torch": "2.10.0+cu128",
+  "cuda": "12.8",
+  "transformers": "5.6.2",
+  "tokenizers": "0.22.2",
+  "huggingface-hub": "1.12.0",
+  "numpy": "2.4.3",
+  "curated_s42": {
+    "checkpoint_bytes": 496314496,
+    "checkpoint_sha256": "b0ca1a81911854746825a3015cde43a2e9f8c865f264d693ff61fb44deeaa054"
+  },
+  "augmented_s42": {
+    "checkpoint_bytes": 496314496,
+    "checkpoint_sha256": "92d017f30ec26b6291ad7f48219b7c159157f847dccbc5f4d3540ab314800d8a"
+  },
+  "curated_weighted_s42": {
+    "checkpoint_bytes": 496314496,
+    "checkpoint_sha256": "dcd73c340487ad2e1e79f15e014a4e85719f9530c293d52f535d81d5ac72576b"
+  }
+}

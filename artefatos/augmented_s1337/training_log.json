@@ -1,0 +1,166 @@
+[
+  {
+    "epoch": 1,
+    "loss": 0.6322747888043523,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 38,
+        "tp": 2,
+        "precision": 0.05263157894736842,
+        "recall": 0.14285714285714285,
+        "f1": 0.07692307692307693
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 20,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 15,
+          "tp": 2,
+          "precision": 0.13333333333333333,
+          "recall": 0.3333333333333333,
+          "f1": 0.19047619047619044
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 3,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "documents": 6
+    }
+  },
+  {
+    "epoch": 2,
+    "loss": 0.1708332556946617,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 37,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 26,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 9,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 2,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "documents": 6
+    }
+  },
+  {
+    "epoch": 3,
+    "loss": 0.10627337787405446,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 26,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 12,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 10,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 4,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "documents": 6
+    }
+  },
+  {
+    "epoch": 4,
+    "loss": 0.07464265082267553,
+    "dev": {
+      "overall": {
+        "gold": 14,
+        "pred": 29,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 18,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 8,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 3,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "documents": 6
+    }
+  }
+]

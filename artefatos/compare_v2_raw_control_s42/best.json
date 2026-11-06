@@ -1,0 +1,105 @@
+{
+  "epoch": 7,
+  "dev": {
+    "overall": {
+      "gold": 14,
+      "pred": 23,
+      "tp": 3,
+      "precision": 0.13043478260869565,
+      "recall": 0.21428571428571427,
+      "f1": 0.16216216216216214
+    },
+    "by_label": {
+      "Pronunciamento": {
+        "gold": 5,
+        "pred": 8,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "Encaminhamento": {
+        "gold": 6,
+        "pred": 10,
+        "tp": 1,
+        "precision": 0.1,
+        "recall": 0.16666666666666666,
+        "f1": 0.125
+      },
+      "Prazo": {
+        "gold": 3,
+        "pred": 5,
+        "tp": 2,
+        "precision": 0.4,
+        "recall": 0.6666666666666666,
+        "f1": 0.5
+      }
+    },
+    "iou50": {
+      "overall": {
+        "gold": 14,
+        "pred": 23,
+        "tp": 10,
+        "precision": 0.43478260869565216,
+        "recall": 0.7142857142857143,
+        "f1": 0.5405405405405405
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 8,
+          "tp": 3,
+          "precision": 0.375,
+          "recall": 0.6,
+          "f1": 0.4615384615384615
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 10,
+          "tp": 4,
+          "precision": 0.4,
+          "recall": 0.6666666666666666,
+          "f1": 0.5
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 5,
+          "tp": 3,
+          "precision": 0.6,
+          "recall": 1.0,
+          "f1": 0.7499999999999999
+        }
+      }
+    },
+    "documents": 6,
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 0,
+        "expected_DecisaoDeInstanciaSuperior": 3,
+        "expected_Sentenca": 2,
+        "accuracy": 0.0
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 6,
+        "expected_Intimacao": 6,
+        "accuracy": 1.0
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Implicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 5,
+        "correct": 2,
+        "expected_ParcialmenteProcedentePoloAtivo": 2,
+        "expected_ImprocedentePoloAtivo": 3,
+        "accuracy": 0.4
+      }
+    }
+  },
+  "macro_f1": 0.5705128205128205
+}

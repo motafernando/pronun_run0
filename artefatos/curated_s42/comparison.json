@@ -1,0 +1,209 @@
+{
+  "population": "mesmos documentos do teste congelado, um processo; pareamento IoU guloso por documento e família",
+  "methods": {
+    "model": {
+      "exact": {
+        "tp": 1,
+        "predictions": 23,
+        "reference": 13,
+        "precision": 0.043478260869565216,
+        "recall": 0.07692307692307693,
+        "f1": 0.05555555555555555
+      },
+      "iou50": {
+        "tp": 8,
+        "predictions": 23,
+        "reference": 13,
+        "precision": 0.34782608695652173,
+        "recall": 0.6153846153846154,
+        "f1": 0.4444444444444444
+      }
+    },
+    "lexical": {
+      "exact": {
+        "tp": 1,
+        "predictions": 9,
+        "reference": 13,
+        "precision": 0.1111111111111111,
+        "recall": 0.07692307692307693,
+        "f1": 0.09090909090909091
+      },
+      "iou50": {
+        "tp": 5,
+        "predictions": 9,
+        "reference": 13,
+        "precision": 0.5555555555555556,
+        "recall": 0.38461538461538464,
+        "f1": 0.45454545454545453
+      }
+    }
+  },
+  "details": [
+    {
+      "method": "model",
+      "per_document": [
+        {
+          "document": "cres-03.txt",
+          "exact": [
+            1,
+            6,
+            2
+          ],
+          "iou50": [
+            2,
+            6,
+            2
+          ]
+        },
+        {
+          "document": "cres-11.txt",
+          "exact": [
+            0,
+            0,
+            1
+          ],
+          "iou50": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "document": "cres-19.txt",
+          "exact": [
+            0,
+            8,
+            2
+          ],
+          "iou50": [
+            2,
+            8,
+            2
+          ]
+        },
+        {
+          "document": "cres-27.txt",
+          "exact": [
+            0,
+            6,
+            6
+          ],
+          "iou50": [
+            3,
+            6,
+            6
+          ]
+        },
+        {
+          "document": "cres-42.txt",
+          "exact": [
+            0,
+            2,
+            1
+          ],
+          "iou50": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "document": "cres-49.txt",
+          "exact": [
+            0,
+            1,
+            1
+          ],
+          "iou50": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "method": "lexical",
+      "per_document": [
+        {
+          "document": "cres-03.txt",
+          "exact": [
+            0,
+            2,
+            2
+          ],
+          "iou50": [
+            1,
+            2,
+            2
+          ]
+        },
+        {
+          "document": "cres-11.txt",
+          "exact": [
+            0,
+            0,
+            1
+          ],
+          "iou50": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "document": "cres-19.txt",
+          "exact": [
+            1,
+            2,
+            2
+          ],
+          "iou50": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "document": "cres-27.txt",
+          "exact": [
+            0,
+            4,
+            6
+          ],
+          "iou50": [
+            1,
+            4,
+            6
+          ]
+        },
+        {
+          "document": "cres-42.txt",
+          "exact": [
+            0,
+            0,
+            1
+          ],
+          "iou50": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "document": "cres-49.txt",
+          "exact": [
+            0,
+            1,
+            1
+          ],
+          "iou50": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    }
+  ]
+}

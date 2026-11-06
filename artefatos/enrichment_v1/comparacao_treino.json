@@ -1,0 +1,107 @@
+{
+  "same_assignments": true,
+  "same_groups": true,
+  "controlled_manifest_fields": [
+    "assignments",
+    "auxiliary",
+    "class_weight_alpha",
+    "epochs",
+    "fold",
+    "groups",
+    "include_partial",
+    "init_checkpoint_sha256",
+    "inside_weight",
+    "mode",
+    "model",
+    "model_revision",
+    "patience",
+    "scheduler",
+    "seed",
+    "selection",
+    "skip_test",
+    "split_seed"
+  ],
+  "runs": {
+    "original": {
+      "source_sha256": "c1d4899ebfb6933488af11f777030eb643925ccbadb641ddd5714abbd06ab86d",
+      "checkpoint_sha256": "ab1099db7622d1c2b923b2b4fa606700c7df2f9d7e7429bc2f85b597918f9675",
+      "epochs_run": 12,
+      "best_epoch": 11,
+      "dev_documents": 6,
+      "dev_gold_spans": 14,
+      "macro_iou50_f1": 0.5412698412698412,
+      "micro_iou50_f1": 0.4150943396226415,
+      "micro_exact_f1": 0.1509433962264151,
+      "predicted_spans": 39,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 3,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.6
+        }
+      }
+    },
+    "enriquecido": {
+      "source_sha256": "0e9217c02bb6e7c117410df4279ce46a4ad12dc198a111d083ba48f02df2bfa4",
+      "checkpoint_sha256": "0d5752bc09f1873780b435137be822c02b8cb1acc4ea4263f9068397e3def187",
+      "epochs_run": 11,
+      "best_epoch": 7,
+      "dev_documents": 6,
+      "dev_gold_spans": 14,
+      "macro_iou50_f1": 0.6203208556149732,
+      "micro_iou50_f1": 0.48888888888888893,
+      "micro_exact_f1": 0.13333333333333333,
+      "predicted_spans": 31,
+      "attributes_on_reference_spans": {
+        "Pronunciamento": {
+          "support": 5,
+          "correct": 1,
+          "expected_DecisaoDeInstanciaSuperior": 3,
+          "expected_Sentenca": 2,
+          "accuracy": 0.2
+        },
+        "Encaminhamento": {
+          "support": 6,
+          "correct": 6,
+          "expected_Intimacao": 6,
+          "accuracy": 1.0
+        },
+        "Prazo": {
+          "support": 3,
+          "correct": 3,
+          "expected_Implicito": 3,
+          "accuracy": 1.0
+        },
+        "Procedencia": {
+          "support": 5,
+          "correct": 2,
+          "expected_ParcialmenteProcedentePoloAtivo": 2,
+          "expected_ImprocedentePoloAtivo": 3,
+          "accuracy": 0.4
+        }
+      }
+    }
+  },
+  "note": "Mesma validação pequena usada para selecionar época; métricas exploratórias, sem teste independente."
+}

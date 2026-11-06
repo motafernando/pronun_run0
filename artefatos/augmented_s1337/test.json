@@ -1,0 +1,37 @@
+{
+  "overall": {
+    "gold": 13,
+    "pred": 31,
+    "tp": 3,
+    "precision": 0.0967741935483871,
+    "recall": 0.23076923076923078,
+    "f1": 0.13636363636363635
+  },
+  "by_label": {
+    "Pronunciamento": {
+      "gold": 2,
+      "pred": 2,
+      "tp": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "Encaminhamento": {
+      "gold": 7,
+      "pred": 22,
+      "tp": 2,
+      "precision": 0.09090909090909091,
+      "recall": 0.2857142857142857,
+      "f1": 0.13793103448275862
+    },
+    "Prazo": {
+      "gold": 4,
+      "pred": 7,
+      "tp": 1,
+      "precision": 0.14285714285714285,
+      "recall": 0.25,
+      "f1": 0.18181818181818182
+    }
+  },
+  "documents": 6
+}
