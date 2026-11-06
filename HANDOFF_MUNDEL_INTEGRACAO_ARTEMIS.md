@@ -7,22 +7,24 @@
 
 ## 1. O que foi feito
 
-Construímos e avaliamos o primeiro pipeline neural de análise de pronunciamento judicial sobre o projeto `Ultimatum NER Dataset` (INCEpTION), partindo do baseline exploratório por regras até um modelo multi-head baseado em `eduagarcia/RoBERTaLexPT-base`.
+Construímos e avaliamos o primeiro pipeline neural de análise de pronunciamento judicial sobre o projeto `Ultimatum NER Dataset` (INCEpTION), partindo do baseline exploratório por regras até um modelo multi-head baseado em `eduagarcia/RoBERTaLexPT-base` (revisão `9dea30875c93dc2d33b35c2338dfc93c86715b9e`).
 
 ### Etapas executadas
 1. **Inventário e higienização de fronteiras (`enrichment_v2` / `Run 1`):**
    - Base: 152 documentos candidatos (150 textos únicos, agrupados em 17 processos distintos para evitar vazamento entre treino e validação).
    - 131 documentos com curadoria concluída contendo pronunciamentos (477 trechos: 281 `Encaminhamento`, 106 `Prazo`, 89 `Pronunciamento`, 1 `Despacho`; 268 relações) + 21 documentos com anotações individuais (44 versões, 168 trechos).
    - Como 31,7% dos trechos pareados entre anotadores individuais e curadoria divergem no token exato de início ou fim, aplicamos **projeção da estrutura curada** e **mascaramento de fronteiras divergentes (`border_mask`, `ignore_index = -100`)** nas versões individuais durante o treino.
-2. **Arquitetura (`AuxiliaryModel` / `TwoHead` em [`poc.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/poc.py)):**
-   - **Cabeça principal BIO (7 classes):** `O`, `B/I-Pronunciamento`, `B/I-Encaminhamento`, `B/I-Prazo` (janelas de 384 subtokens com *stride* de 96).
-   - **4 cabeças auxiliares por span (mean-pooling sobre os tokens do trecho):**
+2. **Arquitetura (`AuxiliaryModel` / `TwoHead` em [`train.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/train.py#L25-L43) e [`poc.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/poc.py)):**
+   - **Duas cabeças BIO principais (`HEAD_A` para atos e `HEAD_B` para prazos):**
+     - `HEAD_A`: `O`, `B/I-Pronunciamento`, `B/I-Encaminhamento`;
+     - `HEAD_B`: `O`, `B/I-Prazo` (permite que um `Prazo` fique aninhado dentro de um `Encaminhamento` ou `Pronunciamento`, usando janelas de 384 subtokens com *stride* de 96).
+   - **4 cabeças auxiliares por span (`ATTR_HEADS`, mean-pooling sobre os tokens do trecho):**
      - `Pronunciamento` (subtipo do ato: despacho, decisão, sentença, acórdão);
      - `Procedencia` (procedente, improcedente, parcial, etc.);
      - `Encaminhamento` (intimação, citação, publicação, redistribuição, etc.);
      - `Prazo` (normalizado: `5d`, `8d`, `10d`, `15d`, `30d`, etc.).
 3. **Pós-processamento e extração de relações (`Run 1`):**
-   - `postprocess_spans_v3`: poda pontuação residual isolada nas bordas (`,;:`) e funde apenas spans colados (` distância == 0 `) da mesma família.
+   - `postprocess_spans_v3`: poda pontuação residual isolada nas bordas (`,;:`) e funde apenas spans colados (`distância == 0`) da mesma família.
    - `predict_relations_v3`: reconstrói os vínculos `estabelecido` (`Prazo -> Encaminhamento/Pronunciamento`), `vinculado` (`Encaminhamento -> Pronunciamento`) e `continuado` (trechos partidos por um prazo intercalado).
 
 ---
@@ -50,13 +52,13 @@ Construímos e avaliamos o primeiro pipeline neural de análise de pronunciament
 
 ### GitHub (Código, testes e checkpoints em Releases)
 - **Repositório:** `https://github.com/motafernando/pronun_run0`
-  - **Branch `main` (consolidada para integração no Artemis):** código limpo (`poc.py`, `inferir.py`, `train.py`, `enriquecimento.py`), testes unitários e metadados dos dois modelos principais (`run1_e1a_border_mask_s42` e `compare_v2_robertalexpt_base_s42`).
+  - **Branch `main` (consolidada para integração no Artemis):** código limpo ([`poc.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/poc.py), [`train.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/train.py), [`inferir.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/inferir.py), [`enriquecimento.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/enriquecimento.py)), testes unitários e metadados dos dois modelos principais (`artefatos/run1_e1a_border_mask_s42/best.json` e `artefatos/compare_v2_robertalexpt_base_s42/best.json`).
   - **Branch `experimentos-run0`:** histórico completo das 29 runs (`Run 0` + `Run 1`), scripts de ablação e relatórios detalhados.
 - **Releases com os arquivos `best.pt` (473 MB):**
   - **Run 1 (Recomendado — `v0.2.0-run1`):** `https://github.com/motafernando/pronun_run0/releases/tag/v0.2.0-run1`
-    - Asset: `run1_e1a_border_mask_s42_best.pt` (SHA-256: `dba4a6d9b428d109c348090da5d38153a83269958eb2d93651c10f053ea9a3ea`)
+    - Assets anexados na release: `best.pt` (SHA-256: `dba4a6d9b428d109c348090da5d38153a83269958eb2d93651c10f053ea9a3ea`), `best.json` e `manifest.json`.
   - **Run 0 (Baseline anterior — `v0.1.0-run0`):** `https://github.com/motafernando/pronun_run0/releases/tag/v0.1.0-run0`
-    - Asset: `compare_v2_robertalexpt_base_s42_best.pt` (SHA-256: `1f5571dbf03a1f443712ab306a9294774cb6801064a3351b39c548be873c0f16`)
+    - Assets anexados na release: `best.pt` (SHA-256: `1f5571dbf03a1f443712ab306a9294774cb6801064a3351b39c548be873c0f16`), `best.json` e `manifest.json`.
 
 ### Hugging Face Hub (Mesmo repositório dos modelos NER)
 - **Repositório:** `CEIA-Ultimatum/ultimatum-ner-models`
@@ -67,98 +69,107 @@ Construímos e avaliamos o primeiro pipeline neural de análise de pronunciament
 
 ## 4. Como integrar no Artemis (Passo a Passo)
 
-O módulo [`poc.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/poc.py) já expõe a função `predict_documento`, que recebe o texto bruto da publicação e devolve os spans com offsets de caractere (`begin`, `end`), classe, propriedades previstas, confiança e relações entre trechos, no mesmo padrão de offsets usado pelo NER do Artemis.
+O módulo [`train.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/train.py#L147-L157) (e a CLI [`inferir.py`](file:///C:/Users/Fernando/Documents/New%20project%203/inception/pronunciamento_poc/inferir.py)) expõe a função `predict_documento`, que recebe o texto bruto da publicação e devolve `entities` com `char_start_index`, `char_end_index`, `begin`, `end`, `label`, `span`, `properties` e `relations`, seguindo o mesmo contrato de offsets do visualizador/adaptador do Artemis.
 
-### 4.1. Baixar o checkpoint via Hugging Face Hub
+### 4.1. Via linha de comando (`inferir.py`)
+```powershell
+python inferir.py documento.txt --checkpoint artefatos/run1_e1a_border_mask_s42/best.pt -o saida_pronun.json
+```
+
+### 4.2. Via Python (baixando o checkpoint do Hugging Face Hub)
 ```python
+import torch
 from huggingface_hub import hf_hub_download
+from transformers import AutoTokenizer
+from train import MODEL, REVISION, AuxiliaryModel, TwoHead, predict_documento
 
+# 1. Baixar o checkpoint recomendado (Run 1 - border_mask)
 ckpt_path = hf_hub_download(
     repo_id="CEIA-Ultimatum/ultimatum-ner-models",
     filename="artefatos/run1_e1a_border_mask_s42/best.pt",
     revision="pronun-run0",
 )
-```
 
-### 4.2. Carregar o modelo e rodar inferência em um documento
-```python
-import torch
-from transformers import AutoTokenizer
-from poc import AuxiliaryModel, predict_documento
+# 2. Carregar tokenizer e pesos
+device = "cuda" if torch.cuda.is_available() else "cpu"
+tokenizer = AutoTokenizer.from_pretrained(MODEL, revision=REVISION, use_fast=True)
+state = torch.load(ckpt_path, map_location=device, weights_only=True)
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
-
-model_name = ckpt.get("model_name", "eduagarcia/RoBERTaLexPT-base")
-revision = ckpt.get("hf_revision", None)
-
-tokenizer = AutoTokenizer.from_pretrained(model_name, revision=revision, use_fast=True)
-model = AuxiliaryModel(
-    model_name=model_name,
-    label_list=ckpt["label_list"],
-    prop_maps=ckpt["prop_maps"],
-    revision=revision,
-).to(device)
-model.load_state_dict(ckpt["model_state"])
+has_aux = any(k.startswith("aux.") for k in state)
+model = (AuxiliaryModel(MODEL, revision=REVISION) if has_aux else TwoHead(MODEL, revision=REVISION)).to(device)
+model.load_state_dict(state)
 model.eval()
 
-texto = "Intime-se a parte autora para manifestação no prazo de 15 dias."
-
+# 3. Rodar inferência no documento
+texto = "Ante o exposto, julgo procedente o pedido. Intime-se a parte autora para manifestação no prazo de 15 dias."
 resultado = predict_documento(
-    model=model,
-    text=texto,
+    model,
+    texto,
     tokenizer=tokenizer,
-    label_list=ckpt["label_list"],
-    prop_maps=ckpt["prop_maps"],
     device=device,
     postproc_v3=True,
     include_relations=True,
 )
 ```
 
-### 4.3. Formato de saída de `predict_documento`
+### 4.3. Formato real de saída de `predict_documento`
 ```json
 {
-  "spans": [
+  "text": "Ante o exposto, julgo procedente o pedido. Intime-se a parte autora para manifestação no prazo de 15 dias.",
+  "entities": [
     {
-      "id": "T1",
-      "family": "Encaminhamento",
+      "label": "Pronunciamento",
+      "span": "Ante o exposto, julgo procedente o pedido",
+      "char_start_index": 0,
+      "char_end_index": 41,
       "begin": 0,
-      "end": 42,
-      "text": "Intime-se a parte autora para manifestação",
-      "score": 0.9412,
-      "properties": {
-        "Encaminhamento": "intimacao"
-      }
+      "end": 41,
+      "properties": [
+        "DecisaoInterlocutoria",
+        "ImprocedentePoloAtivo"
+      ]
     },
     {
-      "id": "T2",
-      "family": "Prazo",
-      "begin": 55,
-      "end": 62,
-      "text": "15 dias",
-      "score": 0.9885,
-      "properties": {
-        "Prazo": "15d"
-      }
+      "label": "Encaminhamento",
+      "span": "Intime-se a parte autora para manifestação",
+      "char_start_index": 43,
+      "char_end_index": 85,
+      "begin": 43,
+      "end": 85,
+      "properties": [
+        "Intimacao"
+      ]
+    },
+    {
+      "label": "Prazo",
+      "span": "prazo de 15 dias",
+      "char_start_index": 89,
+      "char_end_index": 105,
+      "begin": 89,
+      "end": 105,
+      "properties": [
+        "Explicito"
+      ]
     }
   ],
   "relations": [
     {
-      "source_id": "T2",
-      "target_id": "T1",
       "label": "estabelecido",
-      "source_family": "Prazo",
-      "target_family": "Encaminhamento",
-      "rule": "prazo_nearest_act"
+      "source": 2,
+      "target": 1
+    },
+    {
+      "label": "vinculado",
+      "source": 1,
+      "target": 0
     }
   ]
 }
 ```
 
 ### 4.4. Como acoplar à Ficha do Artemis
-1. **Execução em paralelo ou em sequência ao NER v1:** ambos os modelos consomem exatamente a mesma `string` de entrada (`text`) e devolvem offsets `(begin, end)` baseados em caracteres sobre esse texto.
-2. **Campos adicionais sugeridos na Ficha Gerada:**
-   - **Ordens / Encaminhamentos:** listar `span["text"]` (e subtipo `span["properties"].get("Encaminhamento")`) para cada span da família `Encaminhamento`.
-   - **Prazos identificados:** listar `span["text"]` + valor normalizado (`span["properties"].get("Prazo")`) e exibir o vínculo `estabelecido` apontando para a ordem correspondente (`target_id`).
-   - **Decisões / Pronunciamentos:** listar os trechos de `Pronunciamento` com destaque visual no documento, mantendo o clique para o trecho de origem.
+1. **Compatibilidade direta com `visualizar_predicoes.py`:** `entities` já usa `char_start_index`, `char_end_index`, `label` e `span`, e `relations` já usa índices inteiros `source` e `target` sobre a lista `entities` (exatamente o contrato descrito no `GUIA_APRESENTACAO.md`).
+2. **Campos adicionais na Ficha Gerada:**
+   - **Decisões (`Pronunciamento`):** exibir o trecho e subtipos previstos em `properties` (`despacho`, `decisao`, `sentenca`, `acordao` e `procedencia`).
+   - **Ordens (`Encaminhamento`):** exibir o trecho da determinação judicial e o tipo (`intimacao`, `citacao`, etc.).
+   - **Prazos (`Prazo`):** exibir a expressão textual, o valor normalizado em `properties` (ex.: `15d`) e o arco `estabelecido` apontando para a ordem correspondente.
