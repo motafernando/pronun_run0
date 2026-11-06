@@ -1,0 +1,176 @@
+{
+  "epoch": 12,
+  "dev": {
+    "overall": {
+      "gold": 16,
+      "pred": 25,
+      "tp": 6,
+      "precision": 0.24,
+      "recall": 0.375,
+      "f1": 0.2926829268292683
+    },
+    "by_label": {
+      "Pronunciamento": {
+        "gold": 6,
+        "pred": 6,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "Encaminhamento": {
+        "gold": 7,
+        "pred": 13,
+        "tp": 3,
+        "precision": 0.23076923076923078,
+        "recall": 0.42857142857142855,
+        "f1": 0.3
+      },
+      "Prazo": {
+        "gold": 3,
+        "pred": 6,
+        "tp": 3,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666
+      }
+    },
+    "iou50": {
+      "overall": {
+        "gold": 16,
+        "pred": 25,
+        "tp": 13,
+        "precision": 0.52,
+        "recall": 0.8125,
+        "f1": 0.6341463414634146
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 6,
+          "pred": 6,
+          "tp": 4,
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666
+        },
+        "Encaminhamento": {
+          "gold": 7,
+          "pred": 13,
+          "tp": 6,
+          "precision": 0.46153846153846156,
+          "recall": 0.8571428571428571,
+          "f1": 0.6
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 6,
+          "tp": 3,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        }
+      }
+    },
+    "documents": 5,
+    "postproc_v3": {
+      "overall": {
+        "gold": 16,
+        "pred": 25,
+        "tp": 7,
+        "precision": 0.28,
+        "recall": 0.4375,
+        "f1": 0.34146341463414637
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 6,
+          "pred": 6,
+          "tp": 1,
+          "precision": 0.16666666666666666,
+          "recall": 0.16666666666666666,
+          "f1": 0.16666666666666666
+        },
+        "Encaminhamento": {
+          "gold": 7,
+          "pred": 13,
+          "tp": 3,
+          "precision": 0.23076923076923078,
+          "recall": 0.42857142857142855,
+          "f1": 0.3
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 6,
+          "tp": 3,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 16,
+          "pred": 25,
+          "tp": 13,
+          "precision": 0.52,
+          "recall": 0.8125,
+          "f1": 0.6341463414634146
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 6,
+            "pred": 6,
+            "tp": 4,
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666,
+            "f1": 0.6666666666666666
+          },
+          "Encaminhamento": {
+            "gold": 7,
+            "pred": 13,
+            "tp": 6,
+            "precision": 0.46153846153846156,
+            "recall": 0.8571428571428571,
+            "f1": 0.6
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        }
+      }
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 6,
+        "correct": 2,
+        "expected_DecisaoInterlocutoria": 4,
+        "expected_Sentenca": 2,
+        "accuracy": 0.3333333333333333
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 4,
+        "expected_Intimacao": 6,
+        "accuracy": 0.6666666666666666
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Explicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 1,
+        "correct": 0,
+        "expected_ProcedentePoloAtivo": 1,
+        "accuracy": 0.0
+      }
+    }
+  },
+  "macro_f1": 0.6444444444444444
+}

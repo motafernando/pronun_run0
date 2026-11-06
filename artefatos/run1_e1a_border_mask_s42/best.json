@@ -1,0 +1,177 @@
+{
+  "epoch": 5,
+  "dev": {
+    "overall": {
+      "gold": 14,
+      "pred": 16,
+      "tp": 3,
+      "precision": 0.1875,
+      "recall": 0.21428571428571427,
+      "f1": 0.19999999999999998
+    },
+    "by_label": {
+      "Pronunciamento": {
+        "gold": 5,
+        "pred": 6,
+        "tp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "Encaminhamento": {
+        "gold": 6,
+        "pred": 7,
+        "tp": 2,
+        "precision": 0.2857142857142857,
+        "recall": 0.3333333333333333,
+        "f1": 0.30769230769230765
+      },
+      "Prazo": {
+        "gold": 3,
+        "pred": 3,
+        "tp": 1,
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "f1": 0.3333333333333333
+      }
+    },
+    "iou50": {
+      "overall": {
+        "gold": 14,
+        "pred": 16,
+        "tp": 11,
+        "precision": 0.6875,
+        "recall": 0.7857142857142857,
+        "f1": 0.7333333333333334
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 6,
+          "tp": 3,
+          "precision": 0.5,
+          "recall": 0.6,
+          "f1": 0.5454545454545454
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 7,
+          "tp": 5,
+          "precision": 0.7142857142857143,
+          "recall": 0.8333333333333334,
+          "f1": 0.7692307692307692
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 3,
+          "tp": 3,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      }
+    },
+    "documents": 6,
+    "postproc_v3": {
+      "overall": {
+        "gold": 14,
+        "pred": 16,
+        "tp": 3,
+        "precision": 0.1875,
+        "recall": 0.21428571428571427,
+        "f1": 0.19999999999999998
+      },
+      "by_label": {
+        "Pronunciamento": {
+          "gold": 5,
+          "pred": 6,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Encaminhamento": {
+          "gold": 6,
+          "pred": 7,
+          "tp": 2,
+          "precision": 0.2857142857142857,
+          "recall": 0.3333333333333333,
+          "f1": 0.30769230769230765
+        },
+        "Prazo": {
+          "gold": 3,
+          "pred": 3,
+          "tp": 1,
+          "precision": 0.3333333333333333,
+          "recall": 0.3333333333333333,
+          "f1": 0.3333333333333333
+        }
+      },
+      "iou50": {
+        "overall": {
+          "gold": 14,
+          "pred": 16,
+          "tp": 10,
+          "precision": 0.625,
+          "recall": 0.7142857142857143,
+          "f1": 0.6666666666666666
+        },
+        "by_label": {
+          "Pronunciamento": {
+            "gold": 5,
+            "pred": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 0.6,
+            "f1": 0.5454545454545454
+          },
+          "Encaminhamento": {
+            "gold": 6,
+            "pred": 7,
+            "tp": 4,
+            "precision": 0.5714285714285714,
+            "recall": 0.6666666666666666,
+            "f1": 0.6153846153846153
+          },
+          "Prazo": {
+            "gold": 3,
+            "pred": 3,
+            "tp": 3,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        }
+      }
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 1,
+        "expected_DecisaoDeInstanciaSuperior": 3,
+        "expected_Sentenca": 2,
+        "accuracy": 0.2
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 6,
+        "expected_Intimacao": 6,
+        "accuracy": 1.0
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Implicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 5,
+        "correct": 2,
+        "expected_ParcialmenteProcedentePoloAtivo": 2,
+        "expected_ImprocedentePoloAtivo": 3,
+        "accuracy": 0.4
+      }
+    }
+  },
+  "macro_f1": 0.7715617715617715
+}

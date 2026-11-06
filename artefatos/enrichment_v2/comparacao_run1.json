@@ -1,0 +1,442 @@
+{
+  "compare_v2_robertalexpt_base_s42": {
+    "best_epoch": 5,
+    "macro_iou50_f1": 0.6759,
+    "micro_iou50_f1": 0.6471,
+    "micro_exact_f1": 0.1765,
+    "postproc_v3_exact_f1": 0.1765,
+    "postproc_v3_micro_iou50": 0.6471,
+    "gold_spans": 14,
+    "pred_spans": 20,
+    "by_label_iou50": {
+      "Pronunciamento": 0.5455,
+      "Encaminhamento": 0.625,
+      "Prazo": 0.8571
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.0,
+      "Encaminhamento": 0.125,
+      "Prazo": 0.5714
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 0,
+        "expected_DecisaoDeInstanciaSuperior": 3,
+        "expected_Sentenca": 2,
+        "accuracy": 0.0
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 6,
+        "expected_Intimacao": 6,
+        "accuracy": 1.0
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Implicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 5,
+        "correct": 2,
+        "expected_ParcialmenteProcedentePoloAtivo": 2,
+        "expected_ImprocedentePoloAtivo": 3,
+        "accuracy": 0.4
+      }
+    },
+    "checkpoint_sha256": "1f5571dbf03a1f443712ab306a9294774cb6801064a3351b39c548be873c0f16"
+  },
+  "run1_e1a_border_mask_s42": {
+    "best_epoch": 5,
+    "macro_iou50_f1": 0.7716,
+    "micro_iou50_f1": 0.7333,
+    "micro_exact_f1": 0.2,
+    "postproc_v3_exact_f1": 0.2,
+    "postproc_v3_micro_iou50": 0.6667,
+    "gold_spans": 14,
+    "pred_spans": 16,
+    "by_label_iou50": {
+      "Pronunciamento": 0.5455,
+      "Encaminhamento": 0.7692,
+      "Prazo": 1.0
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.0,
+      "Encaminhamento": 0.3077,
+      "Prazo": 0.3333
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 1,
+        "expected_DecisaoDeInstanciaSuperior": 3,
+        "expected_Sentenca": 2,
+        "accuracy": 0.2
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 6,
+        "expected_Intimacao": 6,
+        "accuracy": 1.0
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Implicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 5,
+        "correct": 2,
+        "expected_ParcialmenteProcedentePoloAtivo": 2,
+        "expected_ImprocedentePoloAtivo": 3,
+        "accuracy": 0.4
+      }
+    },
+    "checkpoint_sha256": "dba4a6d9b428d109c348090da5d38153a83269958eb2d93651c10f053ea9a3ea"
+  },
+  "run1_e1b_border_soft_s42": {
+    "best_epoch": 5,
+    "macro_iou50_f1": 0.7163,
+    "micro_iou50_f1": 0.6875,
+    "micro_exact_f1": 0.25,
+    "postproc_v3_exact_f1": 0.2581,
+    "postproc_v3_micro_iou50": 0.6452,
+    "gold_spans": 14,
+    "pred_spans": 18,
+    "by_label_iou50": {
+      "Pronunciamento": 0.6667,
+      "Encaminhamento": 0.625,
+      "Prazo": 0.8571
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.0,
+      "Encaminhamento": 0.25,
+      "Prazo": 0.5714
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 1,
+        "expected_DecisaoDeInstanciaSuperior": 3,
+        "expected_Sentenca": 2,
+        "accuracy": 0.2
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 6,
+        "expected_Intimacao": 6,
+        "accuracy": 1.0
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Implicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 5,
+        "correct": 2,
+        "expected_ParcialmenteProcedentePoloAtivo": 2,
+        "expected_ImprocedentePoloAtivo": 3,
+        "accuracy": 0.4
+      }
+    },
+    "checkpoint_sha256": "84ea8479fb3293cd51b32c23b52f018721db32ed70edab2b791dc3346d6528fc"
+  },
+  "run1_e1c_curated_dedup_s42": {
+    "best_epoch": 5,
+    "macro_iou50_f1": 0.6361,
+    "micro_iou50_f1": 0.5405,
+    "micro_exact_f1": 0.0541,
+    "postproc_v3_exact_f1": 0.0541,
+    "postproc_v3_micro_iou50": 0.4865,
+    "gold_spans": 14,
+    "pred_spans": 23,
+    "by_label_iou50": {
+      "Pronunciamento": 0.5333,
+      "Encaminhamento": 0.375,
+      "Prazo": 1.0
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.0,
+      "Encaminhamento": 0.125,
+      "Prazo": 0.0
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 0,
+        "expected_DecisaoDeInstanciaSuperior": 3,
+        "expected_Sentenca": 2,
+        "accuracy": 0.0
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 6,
+        "expected_Intimacao": 6,
+        "accuracy": 1.0
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Implicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 5,
+        "correct": 2,
+        "expected_ParcialmenteProcedentePoloAtivo": 2,
+        "expected_ImprocedentePoloAtivo": 3,
+        "accuracy": 0.4
+      }
+    },
+    "checkpoint_sha256": "8e45bc2bf6f713f4959e558978e9bc1146737e7594c22b8f160e8f1aee2eb84a"
+  },
+  "run1_e2a_difflr_1e4_aux025_s42": {
+    "best_epoch": 5,
+    "macro_iou50_f1": 0.7238,
+    "micro_iou50_f1": 0.7097,
+    "micro_exact_f1": 0.129,
+    "postproc_v3_exact_f1": 0.1333,
+    "postproc_v3_micro_iou50": 0.7333,
+    "gold_spans": 14,
+    "pred_spans": 17,
+    "by_label_iou50": {
+      "Pronunciamento": 0.6,
+      "Encaminhamento": 0.7143,
+      "Prazo": 0.8571
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.0,
+      "Encaminhamento": 0.1429,
+      "Prazo": 0.2857
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 1,
+        "expected_DecisaoDeInstanciaSuperior": 3,
+        "expected_Sentenca": 2,
+        "accuracy": 0.2
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 6,
+        "expected_Intimacao": 6,
+        "accuracy": 1.0
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Implicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 5,
+        "correct": 2,
+        "expected_ParcialmenteProcedentePoloAtivo": 2,
+        "expected_ImprocedentePoloAtivo": 3,
+        "accuracy": 0.4
+      }
+    },
+    "checkpoint_sha256": "a7c08c870f0ea64475533d69a9349fff1e1fc48939e59d63ab277d6931f0aaca"
+  },
+  "run1_e2b_difflr_1e4_aux050_s42": {
+    "best_epoch": 5,
+    "macro_iou50_f1": 0.6727,
+    "micro_iou50_f1": 0.6452,
+    "micro_exact_f1": 0.1935,
+    "postproc_v3_exact_f1": 0.1935,
+    "postproc_v3_micro_iou50": 0.5806,
+    "gold_spans": 14,
+    "pred_spans": 17,
+    "by_label_iou50": {
+      "Pronunciamento": 0.5455,
+      "Encaminhamento": 0.6154,
+      "Prazo": 0.8571
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.0,
+      "Encaminhamento": 0.1538,
+      "Prazo": 0.5714
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 1,
+        "expected_DecisaoDeInstanciaSuperior": 3,
+        "expected_Sentenca": 2,
+        "accuracy": 0.2
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 6,
+        "expected_Intimacao": 6,
+        "accuracy": 1.0
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Implicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 5,
+        "correct": 2,
+        "expected_ParcialmenteProcedentePoloAtivo": 2,
+        "expected_ImprocedentePoloAtivo": 3,
+        "accuracy": 0.4
+      }
+    },
+    "checkpoint_sha256": "9fdc249a2ec372ad640d39fed3d45a9faf8337a9d7fb4cc69cf61d39a27747c1"
+  },
+  "run1_e3_cv_fold2_s42": {
+    "best_epoch": 8,
+    "macro_iou50_f1": 0.7556,
+    "micro_iou50_f1": 0.75,
+    "micro_exact_f1": 0.0833,
+    "postproc_v3_exact_f1": 0.0833,
+    "postproc_v3_micro_iou50": 0.75,
+    "gold_spans": 9,
+    "pred_spans": 15,
+    "by_label_iou50": {
+      "Pronunciamento": 0.8,
+      "Encaminhamento": 0.6667,
+      "Prazo": 0.8
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.2,
+      "Encaminhamento": 0.0,
+      "Prazo": 0.0
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 4,
+        "correct": 2,
+        "expected_DecisaoInterlocutoria": 3,
+        "expected_DecisaoDeInstanciaSuperior": 1,
+        "accuracy": 0.5
+      },
+      "Encaminhamento": {
+        "support": 3,
+        "correct": 1,
+        "expected_Intimacao": 2,
+        "expected_Despacho": 1,
+        "accuracy": 0.3333333333333333
+      },
+      "Prazo": {
+        "support": 2,
+        "correct": 2,
+        "expected_Explicito": 1,
+        "expected_Implicito": 1,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "accuracy": null
+      }
+    },
+    "checkpoint_sha256": "4164884df2a13cc500f1db203f3948c5b03199a75d3f73cf826d4ed2cfb5d895"
+  },
+  "run1_e3_cv_fold3_s42": {
+    "best_epoch": 12,
+    "macro_iou50_f1": 0.6444,
+    "micro_iou50_f1": 0.6341,
+    "micro_exact_f1": 0.2927,
+    "postproc_v3_exact_f1": 0.3415,
+    "postproc_v3_micro_iou50": 0.6341,
+    "gold_spans": 16,
+    "pred_spans": 25,
+    "by_label_iou50": {
+      "Pronunciamento": 0.6667,
+      "Encaminhamento": 0.6,
+      "Prazo": 0.6667
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.0,
+      "Encaminhamento": 0.3,
+      "Prazo": 0.6667
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 6,
+        "correct": 2,
+        "expected_DecisaoInterlocutoria": 4,
+        "expected_Sentenca": 2,
+        "accuracy": 0.3333333333333333
+      },
+      "Encaminhamento": {
+        "support": 6,
+        "correct": 4,
+        "expected_Intimacao": 6,
+        "accuracy": 0.6666666666666666
+      },
+      "Prazo": {
+        "support": 3,
+        "correct": 3,
+        "expected_Explicito": 3,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 1,
+        "correct": 0,
+        "expected_ProcedentePoloAtivo": 1,
+        "accuracy": 0.0
+      }
+    },
+    "checkpoint_sha256": "dea77d9186202d7f209a592defaf9efbe292409d95de162dde3c45a58808b449"
+  },
+  "run1_e3_cv_fold5_s42": {
+    "best_epoch": 12,
+    "macro_iou50_f1": 0.7117,
+    "micro_iou50_f1": 0.7083,
+    "micro_exact_f1": 0.3542,
+    "postproc_v3_exact_f1": 0.4583,
+    "postproc_v3_micro_iou50": 0.7083,
+    "gold_spans": 38,
+    "pred_spans": 58,
+    "by_label_iou50": {
+      "Pronunciamento": 0.5882,
+      "Encaminhamento": 0.6897,
+      "Prazo": 0.8571
+    },
+    "by_label_exact": {
+      "Pronunciamento": 0.3529,
+      "Encaminhamento": 0.2759,
+      "Prazo": 0.5714
+    },
+    "attributes_on_reference_spans": {
+      "Pronunciamento": {
+        "support": 5,
+        "correct": 2,
+        "expected_DecisaoInterlocutoria": 1,
+        "expected_Sentenca": 4,
+        "accuracy": 0.4
+      },
+      "Encaminhamento": {
+        "support": 19,
+        "correct": 14,
+        "expected_Notificacao": 9,
+        "expected_Intimacao": 10,
+        "accuracy": 0.7368421052631579
+      },
+      "Prazo": {
+        "support": 9,
+        "correct": 9,
+        "expected_Explicito": 8,
+        "expected_Implicito": 1,
+        "accuracy": 1.0
+      },
+      "Procedencia": {
+        "support": 4,
+        "correct": 3,
+        "expected_ProcedentePoloAtivo": 3,
+        "expected_ParcialmenteProcedentePoloAtivo": 1,
+        "accuracy": 0.75
+      }
+    },
+    "checkpoint_sha256": "df7c794095d0e5fc6933522efb50e7e165742f37a044edbd65ee790d4c0e6748"
+  }
+}

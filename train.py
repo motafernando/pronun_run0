@@ -13,7 +13,9 @@ import numpy as np
 import torch
 from torch import nn
 from transformers import AutoModel, AutoTokenizer
-from poc import HEAD_A,HEAD_B,ATTR_HEADS,load_snapshot,split_dataset,encode_labels,encode_auxiliary,bio_keys,decode_spans,class_weights,match_iou,continuation_multipliers
+from poc import (HEAD_A,HEAD_B,ATTR_HEADS,load_snapshot,split_dataset,encode_labels,encode_auxiliary,
+                 bio_keys,decode_spans,class_weights,match_iou,continuation_multipliers,
+                 boundary_mask_and_weights,postprocess_spans_v3,predict_relations_v3)
 
 BASE=Path(__file__).resolve().parent
 MODEL='eduagarcia/RoBERTaLexPT-base'
@@ -45,28 +47,40 @@ def windows(tokenizer,text,max_length=384,stride=96):
                      return_offsets_mapping=True,padding='max_length',return_attention_mask=True)
 
 
-def dataset(docs,split,assignments,tokenizer,mode,seed,include_partial=False,auxiliary=False):
+def dataset(docs,split,assignments,tokenizer,mode,seed,include_partial=False,auxiliary=False,boundary_policy='none',border_soft_weight=0.25):
     items=[];counts=collections.Counter()
     for d in docs:
         if assignments[d['id']]!=split:continue
         if split!='train' and not d['curated']:continue
         if not d['curated'] and mode=='curated':continue
-        versions=[(v,not d['curated'],1/len(d['versions'])) for v in (d['versions'] if split=='train' else d['versions'][:1])]
-        if split=='train' and d['curated'] and mode=='comprehensive' and d['alternatives']:
-            versions.extend((v,True,.5/len(d['alternatives'])) for v in d['alternatives'])
-        if split=='train' and include_partial and d.get('partial'):
-            versions.extend((v,True,.25/len(d['partial'])) for v in d['partial'])
-            counts['partial_versions']+=len(d['partial'])
+        if split=='train' and d['curated'] and boundary_policy=='curated_dedup':
+            boost = 1.5 if (mode=='comprehensive' and d['alternatives']) else 1.0
+            versions=[(d['versions'][0],False,boost)]
+        else:
+            versions=[(v,not d['curated'],1/len(d['versions'])) for v in (d['versions'] if split=='train' else d['versions'][:1])]
+            if split=='train' and d['curated'] and mode=='comprehensive' and d['alternatives']:
+                versions.extend((v,True,.5/len(d['alternatives'])) for v in d['alternatives'])
+            if split=='train' and include_partial and d.get('partial') and not d['curated']:
+                versions.extend((v,True,.25/len(d['partial'])) for v in d['partial'])
+                counts['partial_versions']+=len(d['partial'])
+            elif split=='train' and include_partial and d.get('partial') and d['curated'] and boundary_policy!='curated_dedup':
+                versions.extend((v,True,.25/len(d['partial'])) for v in d['partial'])
+                counts['partial_versions']+=len(d['partial'])
+        gold_spans=d['versions'][0]['spans'] if d['curated'] else None
         for v,is_weak,version_weight in versions:
             enc=windows(tokenizer,v['text'])
             for i,offsets in enumerate(enc['offset_mapping']):
                 a,b=encode_labels(offsets,v['spans'])
+                gold_a,gold_b=encode_labels(offsets,gold_spans) if (d['curated'] and is_weak and gold_spans is not None) else (None,None)
                 if is_weak:
                     # Only annotated positive positions supervise weak material.
                     a=[-100 if x==0 else x for x in a];b=[-100 if x==0 else x for x in b]
+                wa=[1.0]*len(a);wb=[1.0]*len(b)
+                if d['curated'] and is_weak and boundary_policy in ('border_mask','border_soft'):
+                    a,b,wa,wb=boundary_mask_and_weights(a,b,gold_a,gold_b,boundary_policy,border_soft_weight)
                 if all(x==-100 for x in a+b):continue
                 entry=dict(input_ids=enc['input_ids'][i],attention_mask=enc['attention_mask'][i],a=a,b=b,
-                           weight=version_weight,document=d['id'])
+                           wa=wa,wb=wb,weight=version_weight,document=d['id'])
                 if auxiliary:entry['aux']=encode_auxiliary(offsets,v['spans'])
                 items.append(entry)
                 counts['windows']+=1
@@ -85,15 +99,25 @@ def tolerant_score(gold,pred):
 
 
 @torch.no_grad()
-def predict(model,tokenizer,text,device):
-    enc=windows(tokenizer,text); token_scores={}
+def predict(model,tokenizer,text,device,postproc_v3=False):
+    enc=windows(tokenizer,text); token_scores={}; aux_scores={}
+    has_aux=hasattr(model,'forward_all')
     for ids,mask,offs in zip(enc['input_ids'],enc['attention_mask'],enc['offset_mapping']):
-        ai,bi=model(torch.tensor([ids],device=device),torch.tensor([mask],device=device))
-        for (a,b),x,y in zip(offs,ai[0].float().cpu().numpy(),bi[0].float().cpu().numpy()):
+        t_ids=torch.tensor([ids],device=device);t_mask=torch.tensor([mask],device=device)
+        if has_aux:
+            ai,bi,aux=model.forward_all(t_ids,t_mask)
+        else:
+            ai,bi=model(t_ids,t_mask);aux=None
+        for idx,((a,b),x,y) in enumerate(zip(offs,ai[0].float().cpu().numpy(),bi[0].float().cpu().numpy())):
             if b<=a:continue
             key=(a,b)
             if key not in token_scores:token_scores[key]=[x.copy(),y.copy(),1]
             else:token_scores[key][0]+=x;token_scores[key][1]+=y;token_scores[key][2]+=1
+            if aux is not None:
+                for name,logits in aux.items():
+                    akey=(name,a,b);arr=logits[0,idx].float().cpu().numpy()
+                    if akey not in aux_scores:aux_scores[akey]=[arr.copy(),1]
+                    else:aux_scores[akey][0]+=arr;aux_scores[akey][1]+=1
     offsets=sorted(token_scores)
     out=[]
     for head,labels in [(0,HEAD_A),(1,HEAD_B)]:
@@ -102,20 +126,49 @@ def predict(model,tokenizer,text,device):
             while a<b and text[a].isspace():a+=1
             while b>a and text[b-1].isspace():b-=1
             if a<b:out.append(dict(label=label,span=text[a:b],char_start_index=a,char_end_index=b,begin=a,end=b))
-    return sorted(out,key=lambda x:(x['begin'],x['end']))
+    out=sorted(out,key=lambda x:(x['begin'],x['end']))
+    if postproc_v3:
+        out=postprocess_spans_v3(text,out)
+    if has_aux and aux_scores:
+        for s in out:
+            props=[]
+            heads_for_span=[s['label']]+(['Procedencia'] if s['label']=='Pronunciamento' else [])
+            for hname in heads_for_span:
+                if hname not in ATTR_HEADS:continue
+                rows=[arr/n for (h,a,b),(arr,n) in aux_scores.items() if h==hname and a<s['end'] and b>s['begin']]
+                if rows:
+                    pred_prop=ATTR_HEADS[hname][int(np.argmax(np.mean(rows,axis=0)))]
+                    props.append(pred_prop)
+            s['properties']=props
+    return out
 
 
-def evaluate(model,tokenizer,docs,split,assignments,device):
+@torch.no_grad()
+def predict_documento(model,text,tokenizer=None,device=None,postproc_v3=True,include_relations=True):
+    """Artemis-compatible document prediction contract for pronouncements."""
+    if not text or not text.strip():
+        return dict(text=text,entities=[],relations=[])
+    if device is None:
+        device=next(model.parameters()).device
+    if tokenizer is None:
+        tokenizer=getattr(model,'tokenizer',None) or AutoTokenizer.from_pretrained(MODEL,revision=REVISION,use_fast=True)
+    entities=predict(model,tokenizer,text,device,postproc_v3=postproc_v3)
+    relations=predict_relations_v3(text,entities) if include_relations else []
+    return dict(text=text,entities=entities,relations=relations)
+
+
+def evaluate(model,tokenizer,docs,split,assignments,device,postproc_v3=False):
     model.eval();gold=set();pred=set();details=[]
     for d in docs:
         if assignments[d['id']]!=split or not d['curated']:continue
         v=d['versions'][0]
         if any(s['label'] not in {'Prazo','Pronunciamento','Encaminhamento'} for s in v['spans']):continue
-        output=predict(model,tokenizer,v['text'],device)
+        output=predict(model,tokenizer,v['text'],device,postproc_v3=postproc_v3)
+        rels=predict_relations_v3(v['text'],output)
         g={(d['id'],)+k for k in bio_keys(v['spans'])}
         p={(d['id'],s['label'],s['begin'],s['end']) for s in output}
         gold.update(g);pred.update(p)
-        details.append(dict(document=d['id'],metrics=score(g,p),text=v['text'],entities=output,relations=[]))
+        details.append(dict(document=d['id'],metrics=score(g,p),text=v['text'],entities=output,relations=rels))
     result={'overall':score(gold,pred),'by_label':{},'iou50':{'overall':tolerant_score(gold,pred),'by_label':{}},'documents':len(details)}
     for label in ['Pronunciamento','Encaminhamento','Prazo']:
         result['by_label'][label]=score({x for x in gold if x[1]==label},{x for x in pred if x[1]==label})
@@ -170,9 +223,15 @@ def main():
     p.add_argument('--include-partial',action='store_true')
     p.add_argument('--auxiliary',action='store_true',help='Treina propriedades em cabeças por família')
     p.add_argument('--init-checkpoint',type=Path,help='Pesos de extração previamente treinados')
+    p.add_argument('--boundary-policy',choices=['none','border_mask','border_soft','curated_dedup'],default='none')
+    p.add_argument('--border-soft-weight',type=float,default=0.25)
+    p.add_argument('--head-learning-rate',type=float,default=None,help='Taxa diferenciada para cabeças lineares (a, b, aux)')
+    p.add_argument('--aux-loss-weight',type=float,default=0.25)
+    p.add_argument('--postproc-v3',action='store_true',help='Aplica pós-processamento v3 de fronteiras na avaliação')
     args=p.parse_args();args.run_dir.mkdir(parents=True,exist_ok=True)
     revision=args.revision or (REVISION if args.model==MODEL else None)
     if args.batch_size<1 or args.learning_rate<=0:raise ValueError('Batch e taxa de aprendizagem devem ser positivos')
+    head_lr=args.head_learning_rate if args.head_learning_rate is not None else args.learning_rate
     random.seed(args.seed);np.random.seed(args.seed);torch.manual_seed(args.seed);torch.cuda.manual_seed_all(args.seed)
     torch.set_num_threads(4)
     source=args.source_jsonl or BASE.parent/'relatorios'/'pronunciamentos_2026-11-06'/'versoes_pronunciamentos.jsonl'
@@ -181,11 +240,11 @@ def main():
     assignments,groups=split_dataset(docs,fold=args.fold)
     # Save split before loading pretrained weights or training.
     if args.inside_weight<1:raise ValueError('--inside-weight precisa ser >= 1')
-    manifest={'assignments':assignments,'groups':groups,'split_seed':42,'fold':args.fold,'source':str(source),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'selection_source_sha256':hashlib.sha256(args.selection_source_jsonl.read_bytes()).hexdigest() if args.selection_source_jsonl else None,'mode':args.mode,'seed':args.seed,'model':args.model,'model_revision':revision,'learning_rate':args.learning_rate,'batch_size':args.batch_size,'class_weight_alpha':args.class_weight_alpha,'inside_weight':args.inside_weight,'epochs':args.epochs,'selection':args.selection,'scheduler':args.scheduler,'patience':args.patience,'skip_test':args.skip_test,'include_partial':args.include_partial,'auxiliary':args.auxiliary,'init_checkpoint_sha256':hashlib.sha256(args.init_checkpoint.read_bytes()).hexdigest() if args.init_checkpoint else None}
+    manifest={'assignments':assignments,'groups':groups,'split_seed':42,'fold':args.fold,'source':str(source),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'selection_source_sha256':hashlib.sha256(args.selection_source_jsonl.read_bytes()).hexdigest() if args.selection_source_jsonl else None,'mode':args.mode,'seed':args.seed,'model':args.model,'model_revision':revision,'learning_rate':args.learning_rate,'head_learning_rate':head_lr,'aux_loss_weight':args.aux_loss_weight,'boundary_policy':args.boundary_policy,'border_soft_weight':args.border_soft_weight,'postproc_v3':args.postproc_v3,'batch_size':args.batch_size,'class_weight_alpha':args.class_weight_alpha,'inside_weight':args.inside_weight,'epochs':args.epochs,'selection':args.selection,'scheduler':args.scheduler,'patience':args.patience,'skip_test':args.skip_test,'include_partial':args.include_partial,'auxiliary':args.auxiliary,'init_checkpoint_sha256':hashlib.sha256(args.init_checkpoint.read_bytes()).hexdigest() if args.init_checkpoint else None}
     (args.run_dir/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
     tokenizer=AutoTokenizer.from_pretrained(args.model,revision=revision,use_fast=True)
     if not tokenizer.is_fast:raise ValueError('Fast tokenizer required')
-    items,counts=dataset(docs,'train',assignments,tokenizer,args.mode,args.seed,args.include_partial,args.auxiliary)
+    items,counts=dataset(docs,'train',assignments,tokenizer,args.mode,args.seed,args.include_partial,args.auxiliary,args.boundary_policy,args.border_soft_weight)
     if not items:raise ValueError('Empty train')
     print('DATA',json.dumps(counts),flush=True)
     model=AuxiliaryModel(args.model,revision) if args.auxiliary else TwoHead(args.model,revision)
@@ -200,7 +259,15 @@ def main():
         weights.append(torch.tensor(w,device=device))
         print('CLASS_WEIGHTS',key,json.dumps({'counts':dict(counts_labels),'weights':w,'alpha':args.class_weight_alpha}),flush=True)
     continuation_weights=[torch.tensor(continuation_multipliers(list(range(len(labels))),labels,args.inside_weight),device=device) for labels in (HEAD_A,HEAD_B)]
-    optim=torch.optim.AdamW(model.parameters(),lr=args.learning_rate,weight_decay=.01)
+    if head_lr != args.learning_rate:
+        enc_params=[p for n,p in model.named_parameters() if n.startswith('encoder.')]
+        head_params=[p for n,p in model.named_parameters() if not n.startswith('encoder.')]
+        optim=torch.optim.AdamW([
+            {'params':enc_params,'lr':args.learning_rate,'base_lr':args.learning_rate},
+            {'params':head_params,'lr':head_lr,'base_lr':head_lr},
+        ],weight_decay=.01)
+    else:
+        optim=torch.optim.AdamW([{'params':list(model.parameters()),'lr':args.learning_rate,'base_lr':args.learning_rate}],weight_decay=.01)
     scheduler=torch.optim.lr_scheduler.ReduceLROnPlateau(optim,mode='max',factor=.5,patience=2,min_lr=1e-6) if args.scheduler=='plateau' else None
     batches=(len(items)+args.batch_size-1)//args.batch_size
     total=max(1,batches*args.epochs);warm=max(1,int(.1*total));step=0
@@ -216,32 +283,36 @@ def main():
                 else:a,b=model(ids,mask)
                 parts=[]
                 for j,item in enumerate(batch):
-                    for out,target,weight,lookup in [(a[j],ya[j],weights[0],continuation_weights[0]),(b[j],yb[j],weights[1],continuation_weights[1])]:
+                    t_wa=torch.tensor(item.get('wa',[1.0]*len(item['a'])),device=device,dtype=torch.float32)
+                    t_wb=torch.tensor(item.get('wb',[1.0]*len(item['b'])),device=device,dtype=torch.float32)
+                    for out,target,weight,lookup,tok_w in [(a[j],ya[j],weights[0],continuation_weights[0],t_wa),(b[j],yb[j],weights[1],continuation_weights[1],t_wb)]:
                         valid=target!=-100
                         if valid.any():
-                            if args.inside_weight==1:
+                            if args.inside_weight==1 and args.boundary_policy!='border_soft':
                                 head_loss=nn.functional.cross_entropy(out,target,weight=weight,ignore_index=-100)
                             else:
-                                mult=lookup[target.clamp(min=0)]
+                                mult=lookup[target.clamp(min=0)]*tok_w
                                 raw=nn.functional.cross_entropy(out,target,weight=weight,ignore_index=-100,reduction='none')
                                 denom=(mult[valid]*weight[target[valid]]).sum()
-                                head_loss=(raw*mult).sum()/denom
+                                head_loss=(raw*mult).sum()/denom if denom>0 else raw.mean()
                             parts.append(head_loss*item['weight'])
                     if args.auxiliary:
                         for name,out in aux.items():
                             target=torch.tensor(item['aux'][name],device=device)
-                            if (target!=-100).any():parts.append(.25*nn.functional.cross_entropy(out[j],target,ignore_index=-100)*item['weight'])
+                            if (target!=-100).any():parts.append(args.aux_loss_weight*nn.functional.cross_entropy(out[j],target,ignore_index=-100)*item['weight'])
                 loss=sum(parts)/len(parts)
             scaler.scale(loss).backward();scaler.unscale_(optim);nn.utils.clip_grad_norm_(model.parameters(),1.)
             step+=1;scale=step/warm if step<=warm else max(0.,(total-step)/(total-warm)) if total>warm else 1.
             if args.scheduler=='linear':
-                    for group in optim.param_groups:group['lr']=args.learning_rate*scale
+                    for group in optim.param_groups:group['lr']=group.get('base_lr',args.learning_rate)*scale
             scaler.step(optim);scaler.update();loss_sum+=float(loss.detach())
-        dev,_=evaluate(model,tokenizer,docs,'dev',assignments,device)
+        dev,_=evaluate(model,tokenizer,docs,'dev',assignments,device,postproc_v3=args.postproc_v3)
+        dev_post,_=evaluate(model,tokenizer,docs,'dev',assignments,device,postproc_v3=True)
+        dev['postproc_v3']=dict(overall=dev_post['overall'],by_label=dev_post['by_label'],iou50=dev_post['iou50'])
         if args.auxiliary:dev['attributes_on_reference_spans']=evaluate_attributes(model,tokenizer,docs,'dev',assignments,device)
         family_scores=dev['by_label'] if args.selection=='exact' else dev['iou50']['by_label']
         macro=sum(x['f1'] for x in family_scores.values())/3
-        log=dict(epoch=epoch,loss=loss_sum/max(1,batches),learning_rate=optim.param_groups[0]['lr'],selection_score=macro,dev=dev);logs.append(log)
+        log=dict(epoch=epoch,loss=loss_sum/max(1,batches),learning_rate=optim.param_groups[0]['lr'],head_learning_rate=optim.param_groups[-1]['lr'],selection_score=macro,dev=dev);logs.append(log)
         print('EPOCH',json.dumps(log,ensure_ascii=False),flush=True)
         (args.run_dir/'training_log.json').write_text(json.dumps(logs,ensure_ascii=False,indent=2),encoding='utf-8')
         # Macro across the three families; test is evaluated only once after selection.
@@ -256,7 +327,7 @@ def main():
     if args.skip_test:
         print('TEST SKIPPED: experimental run after observing test',flush=True);return
     model.load_state_dict(torch.load(args.run_dir/'best.pt',map_location=device,weights_only=True))
-    test,detail=evaluate(model,tokenizer,docs,'test',assignments,device)
+    test,detail=evaluate(model,tokenizer,docs,'test',assignments,device,postproc_v3=args.postproc_v3)
     (args.run_dir/'test.json').write_text(json.dumps(test,ensure_ascii=False,indent=2),encoding='utf-8')
     (args.run_dir/'test_predictions.json').write_text(json.dumps(detail,ensure_ascii=False,indent=2),encoding='utf-8')
     print('TEST',json.dumps(test,ensure_ascii=False),flush=True)
